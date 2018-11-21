@@ -164,7 +164,6 @@ public class Producte implements Comparable<Producte> {
 		return cadena;
 	}
 	
-	@Override
 	public int compareTo(Producte p) {
 		return (getNomProducte().compareTo(p.getNomProducte()));
 	}

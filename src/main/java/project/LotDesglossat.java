@@ -69,7 +69,6 @@ public class LotDesglossat implements Comparable<LotDesglossat> {
 		return ("Lot: " + lot + "\tQuantitat: " + quantitat + "\tData Entrada: " + dataEntrada + "\tData Caducitat: " + dataCaducitat);
 	}
 
-	@Override	
 	public int compareTo(LotDesglossat l) {
 		if (this.getDataCaducitat()==null && l.getDataCaducitat() == null) 
 			return (this.getDataEntrada().compareTo(l.getDataEntrada()));
