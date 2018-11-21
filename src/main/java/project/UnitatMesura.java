@@ -1,5 +1,7 @@
 package project;
 
-public enum UnitatMesura {
+import java.io.Serializable;
+
+public enum UnitatMesura implements Serializable{
 	UNITAT, LLITRE, GRAMS
 }

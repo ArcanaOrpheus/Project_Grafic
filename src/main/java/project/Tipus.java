@@ -1,5 +1,7 @@
 package project;
 
-public enum Tipus {
+import java.io.Serializable;
+
+public enum Tipus implements Serializable{
 	INGREDIENT,VENDIBLE
 }

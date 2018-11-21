@@ -1,10 +1,11 @@
 package project;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 import javax.swing.*;
 
-public class ShowProducte extends JFrame {
+public class ShowProducte extends JFrame implements Serializable{
 	
 
 	public static void main(String[] args) {

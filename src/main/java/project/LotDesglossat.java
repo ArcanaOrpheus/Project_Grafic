@@ -1,5 +1,6 @@
 package project;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -11,7 +12,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "LotDesglossat")
-public class LotDesglossat implements Comparable<LotDesglossat> {
+public class LotDesglossat implements Comparable<LotDesglossat>,Serializable {
 
 	@Column(name = "quantitat",nullable = false)
 	int quantitat = 1;

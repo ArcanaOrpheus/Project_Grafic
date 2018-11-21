@@ -1,6 +1,8 @@
 package project;
 
-public class Generador{
+import java.io.Serializable;
+
+public class Generador implements Serializable{
 	private static int lotActual=0;
 	private static int producteActual = 0;
 	private static int clientActual = 0;

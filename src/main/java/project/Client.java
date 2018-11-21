@@ -1,5 +1,6 @@
 package project;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -9,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Client")
-public class Client {
+public class Client implements Serializable{
 	@Id
 	@Column(name = "idClient", updatable = true, nullable = false)
 	protected int idClient;

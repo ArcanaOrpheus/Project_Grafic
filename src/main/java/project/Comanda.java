@@ -1,5 +1,6 @@
 package project;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import java.util.Date;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Client")
-public class Comanda {
+public class Comanda implements Serializable{
 	@Id ()
 	@Column(name = "idComanda",nullable = false)
 	protected int idComanda;

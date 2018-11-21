@@ -1,5 +1,6 @@
 package project;
 
+import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Magatzem")
-public class Magatzem {
+public class Magatzem implements Serializable{
 
 	@Column(name = "magatzem")
 	private List<Producte> magatzem = new ArrayList <Producte>();

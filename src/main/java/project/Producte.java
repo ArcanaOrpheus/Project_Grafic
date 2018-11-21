@@ -1,5 +1,6 @@
 package project;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Producte")
-public class Producte implements Comparable<Producte> {
+public class Producte implements Comparable<Producte>, Serializable {
 	@Id
 	@Column(name = "codiProducte")
 	protected int codiProducte;

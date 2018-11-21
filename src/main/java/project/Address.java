@@ -1,7 +1,8 @@
 package project;
 
+import java.io.Serializable;
 
-public class Address{
+public class Address implements Serializable{
 	protected boolean principal;
 	protected String carrer;
 	protected int numero;

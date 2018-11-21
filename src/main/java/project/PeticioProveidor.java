@@ -1,5 +1,6 @@
 package project;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -8,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "PeticioProveidor")
-public class PeticioProveidor {
+public class PeticioProveidor implements Serializable{
 	@Id
 	@Column(name = "idComanda", updatable = true, nullable = false)
 	protected int idComanda;
