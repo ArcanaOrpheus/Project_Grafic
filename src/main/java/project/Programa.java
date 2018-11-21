@@ -7,9 +7,9 @@ import java.util.Date;
 import java.util.Deque;
 import java.util.List;
 
-public class Programa {
+public class Programa implements Serializable{
 	
-	public static void main(String[] args) implements Serializable{
+	public static void main(String[] args) {
 		//1.- Generaci� d'un magatzem petit�
 		Magatzem elMeuMagatzem = new Magatzem(new ArrayList<Producte>(), new ArrayList<Client>(), new ArrayList<Comanda>(), new ArrayList<Proveidor>());
 		generarDadesBasiques(elMeuMagatzem);
