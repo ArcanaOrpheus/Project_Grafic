@@ -3,6 +3,7 @@ package project;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -79,9 +80,17 @@ public class Factory {
 				session.saveOrUpdate(cmd);
 				Date date= new Date();
 				LotDesglossat ld= new LotDesglossat(7,date,7);
-				ld
 				session.saveOrUpdate(ld);
-				
+				List<Producte> lp = new ArrayList<Producte>();
+				List<Client> lc = new ArrayList<Client>();
+				List<Comanda> lm = new ArrayList<Comanda>();
+				List<Proveidor> lpv = new ArrayList<Proveidor>();
+				lp.add(prod);
+				lc.add(c);
+				lm.add(com);
+				lpv.add(prov);
+				Magatzem mg = new Magatzem(lp,lc,lm,lpv);
+				session.saveOrUpdate(mg);
 			}
 			
 			

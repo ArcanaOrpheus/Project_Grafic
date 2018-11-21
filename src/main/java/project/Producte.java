@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Producte")
 public class Producte implements Comparable<Producte>, Serializable {
-	@Id
+	@Id()
 	@Column(name = "codiProducte")
 	protected int codiProducte;
 
@@ -39,7 +39,7 @@ public class Producte implements Comparable<Producte>, Serializable {
 	@Column(name = "composicio")
 	protected Map<Producte, Integer> composicio;	
 	
-	@OneToMany(mappedBy="curso")
+	@OneToMany(mappedBy="curso", cascade= CascadeType.ALL)
 	protected List <LotDesglossat> lots;
 	
 	@Column(name = "tipus")
