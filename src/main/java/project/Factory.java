@@ -91,15 +91,12 @@ public class Factory {
 			}
 			
 			
-			
-			
-			
 			Gato gatetecientouno = session.get(Gato.class, 101);
 			System.out.println(gatetecientouno.getNombre());
 			gatetecientouno.setNombre("kernel");
 			session.saveOrUpdate(gatetecientouno);
 			
-			
+			 session.beginTransaction();
 			session.getTransaction().commit();
 			
 	        session.beginTransaction();
@@ -118,6 +115,7 @@ public class Factory {
 	         System.out.println("hay "+capados+" gatetes capados");
 	         
 	         */
+			 session.beginTransaction();
 	         session.getTransaction().commit();
 			System.out.println("todo ha salido a pedir de Milhouse");
 		} catch(Exception sqlException) {
