@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -13,7 +14,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "LotDesglossat")
 public class LotDesglossat implements Comparable<LotDesglossat>,Serializable {
-
+	@Id ()
 	@Column(name = "quantitat",nullable = false)
 	int quantitat = 1;
 	

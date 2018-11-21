@@ -10,12 +10,13 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Magatzem")
 public class Magatzem implements Serializable{
-
+	@Id ()
 	@Column(name = "magatzem")
 	private List<Producte> magatzem = new ArrayList <Producte>();
 	

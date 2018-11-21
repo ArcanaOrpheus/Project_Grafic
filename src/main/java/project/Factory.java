@@ -1,5 +1,9 @@
 package project;
 
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -45,6 +49,11 @@ public class Factory {
 			session.beginTransaction();
 			
 			for (int i = 200; i < 210; i++) {
+				Client c = new Client();
+				session.saveOrUpdate(c);
+				Comanda com = new Comanda();
+				com.estat=ComandaEstat.PENDENT;
+				session.saveOrUpdate(com);
 				Address dir = new Address();
 				dir.setCarrer("Calle 13");
 				dir.setLatitud(4.20);
@@ -66,6 +75,13 @@ public class Factory {
 				prod.setTipus(Tipus.INGREDIENT);
 				prod.setUnitatMesura(UnitatMesura.UNITAT);
 				session.saveOrUpdate(prod);
+				ComandaLinia cmd = new ComandaLinia(prod, 1, 1);
+				session.saveOrUpdate(cmd);
+				Date date= new Date();
+				LotDesglossat ld= new LotDesglossat(7,date,7);
+				ld
+				session.saveOrUpdate(ld);
+				
 			}
 			
 			

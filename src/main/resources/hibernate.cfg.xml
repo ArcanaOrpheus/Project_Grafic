@@ -11,9 +11,9 @@
 		<!-- Database Connection Settings -->
 		<property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
 <!-- Especificar aqui la DB -->		
-		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/nueva</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/smb</property>
 		<property name="hibernate.connection.username">root</property>
-		<property name="hibernate.connection.password">randomwins</property>
+		<property name="hibernate.connection.password">Blakheart-1</property>
 <!-- Crea tablas automáticamente -->		
 		<property name="hibernate.hbm2ddl.auto">create</property>
 		<property name="show_sql">true</property>
@@ -22,14 +22,14 @@
 		<property name="hibernate.current_session_context_class">org.hibernate.context.internal.ThreadLocalSessionContext</property>
 
 <!-- Aqui van las clases que mapees. TODAS -->
-		<mapping class="ProjectUF2.project.Client" />
-		<mapping class="ProjectUF2.project.Comanda" />
-		<mapping class="ProjectUF2.project.ComandaEstat" />
-		<mapping class="ProjectUF2.project.ComandaLinia" />
-		<mapping class="ProjectUF2.project.LotDesglossat" />
-		<mapping class="ProjectUF2.project.Magatzem" />
-		<mapping class="ProjectUF2.project.PeticioProveidor" />
-		<mapping class="ProjectUF2.project.Producte" />
-		<mapping class="ProjectUF2.project.Proveidor" />
+		<mapping class="project.Client" />
+		<mapping class="project.Comanda" />
+		<mapping class="project.ComandaEstat" />
+		<mapping class="project.ComandaLinia" />
+		<mapping class="project.LotDesglossat" />
+		<mapping class="project.Magatzem" />
+		<mapping class="project.PeticioProveidor" />
+		<mapping class="project.Producte" />
+		<mapping class="project.Proveidor" />
 	</session-factory>
 </hibernate-configuration>

@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Table(name = "ComandaLinia")
 public class ComandaLinia implements Serializable{
 	
-
+	@Id ()
 	@Column(name = "producte",nullable = false)
 	protected Producte producte;
 	
