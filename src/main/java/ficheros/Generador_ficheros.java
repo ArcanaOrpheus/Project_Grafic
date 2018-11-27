@@ -1,4 +1,4 @@
-package Ficheros;
+package ficheros;
 
 import project.*;
 import java.io.File;
