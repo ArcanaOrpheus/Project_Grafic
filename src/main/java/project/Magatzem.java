@@ -176,6 +176,12 @@ public class Magatzem implements Serializable{
 		}
 	}
 	
+	public void setClients(List<Client> lc) {
+		clients = lc;
+	}
+		
+	
+	
 	@Override
 	public String toString() {
 		String s = "";
