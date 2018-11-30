@@ -100,7 +100,6 @@ public class Magatzem implements Serializable{
 		}
 		return pila;
 	}
-		
 	
 	public boolean add(Producte p) {
 		magatzem.add(p);
