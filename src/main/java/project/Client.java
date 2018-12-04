@@ -45,7 +45,7 @@ public class Client implements Serializable{
 	@Column(name = "longitud")
 	protected double longitud;
 
-	Client() {
+	public Client() {
 		idClient = Generador.getNextClient();
 	}
 

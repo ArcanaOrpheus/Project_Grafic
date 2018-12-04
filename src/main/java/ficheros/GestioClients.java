@@ -215,6 +215,43 @@ public class GestioClients {
 			}
 		}
 		
-	}	
+	}
 	
+	public Client cercaIdClient(Magatzem m, int s) throws Exception {
+		
+		Client c = new Client();
+		
+		List<Client> tmp = m.getClients();
+		
+		for(Client cl : tmp)
+		{
+			if(cl.getIdClient() == s)
+			{
+				c = cl;
+				return c;
+			}
+		}
+		
+		throw new Exception("El client amb el id buscat no existeix");
+	}
+	
+	public Client cercaNomClient(Magatzem m, String s) throws Exception {
+		
+		Client c = new Client();
+		
+		List<Client> tmp = m.getClients();
+		
+		for(Client cl : tmp)
+		{
+			if(cl.getNomClient() == s)
+			{
+				c = cl;
+				return c;
+			}
+		}
+		
+		throw new Exception("El client amb el nom buscat no existeix");
+	}
+
+
 }
