@@ -195,6 +195,31 @@ public class Producte implements Comparable<Producte>, Serializable {
 		return cadena;
 	}
 
+	public boolean Add(Magatzem mg, Producte p) {
+			mg.add(p);
+			return true;
+		}
+	
+	public boolean Delete(Magatzem mg, Producte p) {
+		List <Producte> lp = mg.getProductes();
+		int i=(Integer) null;
+		for(Producte p2: lp) {
+			if(p2.equals(p)) {
+				i=lp.indexOf(p2);
+			}
+		}
+		mg.getProductes().remove(i);
+		return true;
+	}
+	
+	public static void check(Producte p) {
+		Map<Producte, Integer> l= p.getComposicio();
+		System.out.println(p.nomProducte+" composicio");
+		for(Producte p2: l.keySet()) {
+			System.out.println(p2+" "+l.get(p2));
+		}
+	}
+	
 	//relacio 1 a n amb lot
 	//relacio n a n amb ell mateix
 	//relacio 1 a n amb peticionsproveidor

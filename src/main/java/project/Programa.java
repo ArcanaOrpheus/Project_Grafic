@@ -31,6 +31,8 @@ public class Programa implements Serializable{
 		System.out.println("3.- Magatzem ordenat per Stock");
 		elMeuMagatzem.getProductes().sort(new CompararStock());
 		System.out.println(elMeuMagatzem);	
+		
+		Producte.check(elMeuMagatzem.getProductes().get(0));
 	}
 
 	private static void generarDadesBasiques(Magatzem mgz) {
