@@ -101,7 +101,6 @@ public class Magatzem implements Serializable{
 		}
 		return pila;
 	}
-		
 	
 	public boolean add(Producte p) {
 		magatzem.add(p);
@@ -176,6 +175,12 @@ public class Magatzem implements Serializable{
 			break;
 		}
 	}
+	
+	public void setClients(List<Client> lc) {
+		clients = lc;
+	}
+		
+	
 	
 	@Override
 	public String toString() {

@@ -45,7 +45,7 @@ public class Client implements Serializable{
 	@Column(name = "longitud")
 	protected double longitud;
 
-	Client() {
+	public Client() {
 		idClient = Generador.getNextClient();
 	}
 
@@ -61,4 +61,92 @@ public class Client implements Serializable{
 	}
 	//relacio 1 a n amb comanda
 	//relacio 1 a 1 amb adreça
+
+	public int getIdClient() {
+		return idClient;
+	}
+
+	public void setIdClient(int idClient) {
+		this.idClient = idClient;
+	}
+
+	public String getNomClient() {
+		return nomClient;
+	}
+
+	public void setNomClient(String nomClient) {
+		this.nomClient = nomClient;
+	}
+
+	public String getCIF() {
+		return CIF;
+	}
+
+	public void setCIF(String cIF) {
+		CIF = cIF;
+	}
+
+	public boolean isActiu() {
+		return actiu;
+	}
+
+	public void setActiu(boolean actiu) {
+		this.actiu = actiu;
+	}
+
+	public String getDireccio() {
+		return direccio;
+	}
+
+	public void setDireccio(String direccio) {
+		this.direccio = direccio;
+	}
+
+	public String getPoblacio() {
+		return poblacio;
+	}
+
+	public void setPoblacio(String poblacio) {
+		this.poblacio = poblacio;
+	}
+
+	public String getPais() {
+		return pais;
+	}
+
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+
+	public String getPersonaContacte() {
+		return personaContacte;
+	}
+
+	public void setPersonaContacte(String personaContacte) {
+		this.personaContacte = personaContacte;
+	}
+
+	public String getTelefon() {
+		return telefon;
+	}
+
+	public void setTelefon(String telefon) {
+		this.telefon = telefon;
+	}
+
+	public double getLatitud() {
+		return latitud;
+	}
+
+	public void setLatitud(double latitud) {
+		this.latitud = latitud;
+	}
+
+	public double getLongitud() {
+		return longitud;
+	}
+
+	public void setLongitud(double longitud) {
+		this.longitud = longitud;
+	}
 }
