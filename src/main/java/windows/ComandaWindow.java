@@ -12,16 +12,38 @@ import javax.swing.border.LineBorder;
 import javax.swing.JComboBox;
 import javax.swing.Box;
 import javax.swing.border.TitledBorder;
+
+import ficheros.GestioComandes;
+import project.Client;
+import project.Comanda;
+import project.Programa;
+
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JTable;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.awt.event.ActionEvent;
 
 public class ComandaWindow {
 
 	private JFrame frame;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JTable table;
+	static JTextPane textComanda = new JTextPane();
+	static JTextPane textIdClient = new JTextPane();
+	static JTextPane textDataC = new JTextPane();
+	static JTextPane textDataLl = new JTextPane();
+	static JTextPane textPorts = new JTextPane();
+	static JTextPane textImport = new JTextPane();
+	private int idComanda = Programa.elMeuMagatzem.getComandes().size() + 1;
+	private LocalDate today = LocalDate.now(ZoneId.of("Europe/Madrid"));
+	private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	private LocalDate nextweek = today.plusDays(7);
+	
 
 	/**
 	 * Launch the application.
@@ -71,9 +93,10 @@ public class ComandaWindow {
 		lblComanda.setBounds(10, 43, 57, 14);
 		frame.getContentPane().add(lblComanda);
 		
-		JTextPane textPane = new JTextPane();
-		textPane.setBounds(77, 37, 161, 20);
-		frame.getContentPane().add(textPane);
+		textComanda.setBounds(66, 41, 161, 20);
+		frame.getContentPane().add(textComanda);
+		textComanda.setText(""+idComanda);
+		textComanda.setEditable(false);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(128, 128, 128), 5));
@@ -82,40 +105,46 @@ public class ComandaWindow {
 		panel_1.setLayout(null);
 		
 		JLabel lblClient = new JLabel("Client");
-		lblClient.setBounds(22, 22, 46, 14);
+		lblClient.setBounds(31, 22, 46, 14);
 		panel_1.add(lblClient);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(87, 19, 532, 20);
 		panel_1.add(comboBox);
 		
-		JTextPane textPane_1 = new JTextPane();
-		textPane_1.setBounds(629, 11, 46, 20);
-		panel_1.add(textPane_1);
+		
+		textIdClient.setBounds(629, 11, 46, 20);
+		panel_1.add(textIdClient);
+		textIdClient.setEditable(false);
 		
 		JLabel lblDatacomanda = new JLabel("dataComanda");
-		lblDatacomanda.setBounds(22, 47, 73, 14);
+		lblDatacomanda.setBounds(18, 50, 73, 14);
 		panel_1.add(lblDatacomanda);
 		
-		JTextPane textPane_2 = new JTextPane();
-		textPane_2.setBounds(97, 47, 234, 20);
-		panel_1.add(textPane_2);
+		
+		textDataC.setBounds(97, 47, 234, 20);
+		panel_1.add(textDataC);
+		textDataC.setText(today.format(dtf));
+		textDataC.setEditable(false);
+		
+		
 		
 		JLabel lblDatalliurament = new JLabel("dataLliurament");
 		lblDatalliurament.setBounds(341, 50, 83, 14);
 		panel_1.add(lblDatalliurament);
 		
-		JTextPane textPane_3 = new JTextPane();
-		textPane_3.setBounds(434, 44, 241, 20);
-		panel_1.add(textPane_3);
 		
-		JLabel lblPorts = new JLabel("Ports:");
+		textDataLl.setBounds(422, 47, 241, 20);
+		panel_1.add(textDataLl);
+		textDataLl.setText(nextweek.format(dtf));
+		
+		JLabel lblPorts = new JLabel("Portes:");
 		lblPorts.setBounds(546, 91, 46, 14);
 		panel_1.add(lblPorts);
 		
-		JTextPane textPane_4 = new JTextPane();
-		textPane_4.setBounds(602, 85, 73, 20);
-		panel_1.add(textPane_4);
+		
+		textPorts.setBounds(602, 85, 73, 20);
+		panel_1.add(textPorts);
 		
 		Box verticalBox = Box.createVerticalBox();
 		verticalBox.setBorder(new TitledBorder(null, "Estat Comanda", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -143,6 +172,22 @@ public class ComandaWindow {
 		frame.getContentPane().add(table);
 		
 		JButton btnNovaComanda = new JButton("Nova Comanda");
+		btnNovaComanda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Comanda c = new Comanda();
+				c.setIdComanda(idComanda);
+				Date date = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
+				c.setDataComanda(date);
+				LocalDate lc = LocalDate.parse(textDataLl.getText(), dtf);
+				Date date2 = Date.from(lc.atStartOfDay(ZoneId.systemDefault()).toInstant());
+				c.setDataLliurament(date2);
+				c.setPortes(Double.parseDouble(textPorts.getText()));
+				Client cli = new Client();
+				c.setClient(cli);
+				
+			}
+		});
 		btnNovaComanda.setBounds(10, 434, 105, 23);
 		frame.getContentPane().add(btnNovaComanda);
 		
@@ -174,8 +219,16 @@ public class ComandaWindow {
 		lblImportTotal.setBounds(629, 409, 76, 14);
 		frame.getContentPane().add(lblImportTotal);
 		
-		JTextPane textPane_5 = new JTextPane();
-		textPane_5.setBounds(732, 403, 97, 20);
-		frame.getContentPane().add(textPane_5);
+		
+		textImport.setBounds(732, 403, 97, 20);
+		frame.getContentPane().add(textImport);
+		textImport.setEditable(false);
+		try {
+			textImport.setText(""+GestioComandes.calcularPreu(idComanda));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			textImport.setText(""+0);
+		}
 	}
 }

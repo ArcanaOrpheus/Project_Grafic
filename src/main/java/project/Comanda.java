@@ -47,7 +47,7 @@ public class Comanda implements Serializable{
 	@Column(name = "linies")
 	protected List <ComandaLinia> linies;
 	
-	Comanda() {
+	public Comanda() {
 		idComanda = Generador.getNextComanda();
 		dataComanda = new Date();
 		dataLliurament = Tools.sumarDies(new Date(), 1);
@@ -91,4 +91,48 @@ public class Comanda implements Serializable{
 	public Client getClient() {
 		return client;
 	}
+	
+	
+
+	public int getIdComanda() {
+		return idComanda;
+	}
+
+	public void setIdComanda(int idComanda) {
+		this.idComanda = idComanda;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public void setDataComanda(Date dataComanda) {
+		this.dataComanda = dataComanda;
+	}
+
+	public void setDataLliurament(Date dataLliurament) {
+		this.dataLliurament = dataLliurament;
+	}
+
+	public void setEstat(ComandaEstat estat) {
+		this.estat = estat;
+	}
+
+	public void setPortes(Double portes) {
+		this.portes = portes;
+	}
+
+	public void setLinies(List<ComandaLinia> linies) {
+		this.linies = linies;
+	}
+
+	public void setCmp_id2(Comparator<Comanda> cmp_id2) {
+		this.cmp_id2 = cmp_id2;
+	}
+
+	public void setCmp_id(Comparator<Comanda> cmp_id) {
+		this.cmp_id = cmp_id;
+	}
+	
+	
 }

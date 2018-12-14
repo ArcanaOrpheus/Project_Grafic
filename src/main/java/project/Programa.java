@@ -9,9 +9,12 @@ import java.util.List;
 
 public class Programa implements Serializable{
 	
+	public static Magatzem elMeuMagatzem = new Magatzem(new ArrayList<Producte>(), new ArrayList<Client>(), new ArrayList<Comanda>(), new ArrayList<Proveidor>());
+	
+	
 	public static void main(String[] args) {
 		//1.- Generaci� d'un magatzem petit�
-		Magatzem elMeuMagatzem = new Magatzem(new ArrayList<Producte>(), new ArrayList<Client>(), new ArrayList<Comanda>(), new ArrayList<Proveidor>());
+		
 		generarDadesBasiques(elMeuMagatzem);
 		System.out.println("Veure Magatzem:");
 		System.out.println(elMeuMagatzem);

@@ -9,17 +9,18 @@ import project.Comanda;
 import project.ComandaEstat;
 import project.Magatzem;
 import project.Producte;
+import project.Programa;
 import project.Proveidor;
 import project.Tipus;
 
 
 public class Filtro {
 
-	public ArrayList<Comanda> comandaPerClient(Magatzem m, Client c) {
+	public static ArrayList<Comanda> comandaPerClient(Client c) {
 		
 		ArrayList<Comanda> comandes = new ArrayList<Comanda>();
 		
-		List<Comanda> allcomandes = m.getComandes();
+		List<Comanda> allcomandes = Programa.elMeuMagatzem.getComandes();
 		
 		for (Comanda ca : allcomandes)
 		{
@@ -31,11 +32,11 @@ public class Filtro {
 		return comandes;
 	}
 	
-	public ArrayList<Comanda> comandaEstat(Magatzem m, ComandaEstat ce) {
+	public static ArrayList<Comanda> comandaEstat(ComandaEstat ce) {
 		
 		ArrayList<Comanda> comandes = new ArrayList<Comanda>();
 		
-		List<Comanda> allcomandes = m.getComandes();
+		List<Comanda> allcomandes = Programa.elMeuMagatzem.getComandes();
 				
 		for(Comanda ca : allcomandes)
 		{
@@ -48,11 +49,11 @@ public class Filtro {
 		return comandes;
 	}
 	
-	public ArrayList<Comanda> comandaDataLl(Magatzem m, Date d, int i) {
+	public ArrayList<Comanda> comandaDataLl(Date d, int i) {
 		
 		ArrayList<Comanda> comandes = new ArrayList<Comanda>();
 		
-		List<Comanda> allcomandes = m.getComandes();
+		List<Comanda> allcomandes = Programa.elMeuMagatzem.getComandes();
 				
 		for(Comanda ca : allcomandes)
 		{
@@ -84,11 +85,11 @@ public class Filtro {
 		return comandes;
 	}
 	
-	public ArrayList<Comanda> comandaDataC(Magatzem m, Date d, int i) {
+	public ArrayList<Comanda> comandaDataC(Date d, int i) {
 		
 		ArrayList<Comanda> comandes = new ArrayList<Comanda>();
 		
-		List<Comanda> allcomandes = m.getComandes();
+		List<Comanda> allcomandes = Programa.elMeuMagatzem.getComandes();
 		
 				
 		for(Comanda ca : allcomandes)
@@ -121,11 +122,11 @@ public class Filtro {
 	
 	
 	
-	public ArrayList<Producte> productePerProveidor(Magatzem m, Proveidor p)
+	public ArrayList<Producte> productePerProveidor(Proveidor p)
 	{
 		ArrayList<Producte> productes = new ArrayList<Producte>();
 		
-		List<Producte> allproductes = m.getProductes();
+		List<Producte> allproductes = Programa.elMeuMagatzem.getProductes();
 		
 		for (Producte pr : allproductes)
 		{
@@ -137,12 +138,12 @@ public class Filtro {
 		return productes;
 	}
 	
-	public ArrayList<Producte> productePerTipus(Magatzem m, Tipus t)
+	public ArrayList<Producte> productePerTipus(Tipus t)
 	{
 		
 		ArrayList<Producte> productes = new ArrayList<Producte>();
 		
-		List<Producte> allproductes = m.getProductes();
+		List<Producte> allproductes = Programa.elMeuMagatzem.getProductes();
 		
 		for (Producte pr : allproductes)
 		{
@@ -155,11 +156,11 @@ public class Filtro {
 		return productes;
 	}
 	
-	public ArrayList<Producte> producteLessStock(Magatzem m){
+	public ArrayList<Producte> producteLessStock(){
 		
 		ArrayList<Producte> productes = new ArrayList<Producte>();
 		
-		List<Producte> allproductes = m.getProductes();
+		List<Producte> allproductes = Programa.elMeuMagatzem.getProductes();
 		
 		for (Producte pr : allproductes)
 		{
@@ -171,11 +172,11 @@ public class Filtro {
 		return productes;
 	}
 	
-	public ArrayList<Producte> productePerPreu(Magatzem m, int i){
+	public ArrayList<Producte> productePerPreu(int i){
 		
 		ArrayList<Producte> productes = new ArrayList<Producte>();
 		
-		List<Producte> allproductes = m.getProductes();
+		List<Producte> allproductes = Programa.elMeuMagatzem.getProductes();
 		
 		for (Producte pr : allproductes) {
 			switch(i) {
