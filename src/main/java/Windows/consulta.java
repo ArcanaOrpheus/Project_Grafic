@@ -15,6 +15,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JCheckBox;
 import javax.swing.ButtonGroup;
 import javax.swing.JTable;
+import javax.swing.JButton;
 
 public class consulta {
 
@@ -51,11 +52,11 @@ public class consulta {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 911, 494);
+		frame.setBounds(100, 100, 949, 517);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		panel.setBackground(new Color(100, 149, 237));
-		panel.setBounds(0, 0, 895, 133);
+		panel.setBounds(0, 0, 933, 144);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -113,8 +114,12 @@ public class consulta {
 		comboBox_1.setBounds(88, 89, 192, 20);
 		panel.add(comboBox_1);
 		
+		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.setBounds(369, 88, 89, 23);
+		panel.add(btnBuscar);
+		
 		table = new JTable();
-		table.setBounds(0, 134, 895, 321);
+		table.setBounds(0, 144, 933, 334);
 		frame.getContentPane().add(table);
 	}
 }

@@ -32,7 +32,7 @@ public class Programa {
 		System.out.println(elMeuMagatzem);	
 	}
 
-	private static void generarDadesBasiques(Magatzem mgz) {
+	public static void generarDadesBasiques(Magatzem mgz) {
 		
 		//Prove�dors
 		Proveidor pv1 = new Proveidor("UNOproveidor");

@@ -90,7 +90,7 @@ public class Producte implements Comparable<Producte> {
 		stock = 0;
 	}
 
-	Producte(String nomProducte){
+	public Producte(String nomProducte){
 		this();
 		this.nomProducte = nomProducte;
 	}
