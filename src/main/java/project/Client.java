@@ -1,8 +1,6 @@
 package project;
 
 import java.io.Serializable;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -149,4 +147,13 @@ public class Client implements Serializable{
 	public void setLongitud(double longitud) {
 		this.longitud = longitud;
 	}
+
+	@Override
+	public String toString() {
+		return nomClient;
+	}
+	
+	
+	
+	
 }

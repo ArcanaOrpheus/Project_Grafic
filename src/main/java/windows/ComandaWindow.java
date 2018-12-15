@@ -4,8 +4,10 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
@@ -20,6 +22,8 @@ import project.Programa;
 
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -27,6 +31,7 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.awt.event.ActionEvent;
+import javax.swing.JToggleButton;
 
 public class ComandaWindow {
 
@@ -39,10 +44,12 @@ public class ComandaWindow {
 	static JTextPane textDataLl = new JTextPane();
 	static JTextPane textPorts = new JTextPane();
 	static JTextPane textImport = new JTextPane();
-	private int idComanda = Programa.elMeuMagatzem.getComandes().size() + 1;
+	private int idComanda = Programa.elMeuMagatzem.getComandes().size()+1;
 	private LocalDate today = LocalDate.now(ZoneId.of("Europe/Madrid"));
 	private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	private LocalDate nextweek = today.plusDays(7);
+	private Client person = new Client();
+	private Comanda c = new Comanda();
 	
 
 	/**
@@ -72,6 +79,8 @@ public class ComandaWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		Programa.main(null);
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 855, 523);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,17 +99,18 @@ public class ComandaWindow {
 		panel.add(lblNewLabel);
 		
 		JLabel lblComanda = new JLabel("Comanda");
-		lblComanda.setBounds(10, 43, 57, 14);
-		frame.getContentPane().add(lblComanda);
+		lblComanda.setBounds(24, 49, 57, 14);
+		frame.getContentPane().add(lblComanda);	
 		
-		textComanda.setBounds(66, 41, 161, 20);
+		textComanda.setBounds(93, 45, 57, 25);
 		frame.getContentPane().add(textComanda);
-		textComanda.setText(""+idComanda);
 		textComanda.setEditable(false);
+		textComanda.setText(""+idComanda);
+		
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(128, 128, 128), 5));
-		panel_1.setBounds(20, 87, 685, 116);
+		panel_1.setBounds(18, 87, 685, 116);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -108,40 +118,50 @@ public class ComandaWindow {
 		lblClient.setBounds(31, 22, 46, 14);
 		panel_1.add(lblClient);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(87, 19, 532, 20);
-		panel_1.add(comboBox);
-		
-		
 		textIdClient.setBounds(629, 11, 46, 20);
 		panel_1.add(textIdClient);
 		textIdClient.setEditable(false);
 		
+		
+		JComboBox comboBox = new JComboBox(new DefaultComboBoxModel(Programa.elMeuMagatzem.getClients().toArray()));
+		comboBox.setBounds(89, 19, 532, 20);
+		panel_1.add(comboBox);
+		comboBox.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) 
+            {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if(value instanceof Client){
+                    person = (Client) value;
+                    
+                    setText(person.getNomClient());
+                    textIdClient.setText(person.getIdClient()-1+"");
+                }
+                
+                return this;
+            }
+        } );
+		
 		JLabel lblDatacomanda = new JLabel("dataComanda");
 		lblDatacomanda.setBounds(18, 50, 73, 14);
 		panel_1.add(lblDatacomanda);
-		
 		
 		textDataC.setBounds(97, 47, 234, 20);
 		panel_1.add(textDataC);
 		textDataC.setText(today.format(dtf));
 		textDataC.setEditable(false);
 		
-		
-		
 		JLabel lblDatalliurament = new JLabel("dataLliurament");
 		lblDatalliurament.setBounds(341, 50, 83, 14);
 		panel_1.add(lblDatalliurament);
 		
-		
-		textDataLl.setBounds(422, 47, 241, 20);
+		textDataLl.setBounds(426, 47, 241, 20);
 		panel_1.add(textDataLl);
 		textDataLl.setText(nextweek.format(dtf));
 		
 		JLabel lblPorts = new JLabel("Portes:");
 		lblPorts.setBounds(546, 91, 46, 14);
 		panel_1.add(lblPorts);
-		
 		
 		textPorts.setBounds(602, 85, 73, 20);
 		panel_1.add(textPorts);
@@ -167,6 +187,7 @@ public class ComandaWindow {
 		buttonGroup.add(rdbtnLliurada);
 		verticalBox.add(rdbtnLliurada);
 		
+		int col = c.getLinies().size();
 		table = new JTable();
 		table.setBounds(20, 216, 809, 182);
 		frame.getContentPane().add(table);
@@ -175,7 +196,6 @@ public class ComandaWindow {
 		btnNovaComanda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				Comanda c = new Comanda();
 				c.setIdComanda(idComanda);
 				Date date = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
 				c.setDataComanda(date);
@@ -183,11 +203,11 @@ public class ComandaWindow {
 				Date date2 = Date.from(lc.atStartOfDay(ZoneId.systemDefault()).toInstant());
 				c.setDataLliurament(date2);
 				c.setPortes(Double.parseDouble(textPorts.getText()));
-				Client cli = new Client();
-				c.setClient(cli);
+				c.setClient(person);
 				
 			}
 		});
+		
 		btnNovaComanda.setBounds(10, 434, 105, 23);
 		frame.getContentPane().add(btnNovaComanda);
 		
@@ -219,10 +239,10 @@ public class ComandaWindow {
 		lblImportTotal.setBounds(629, 409, 76, 14);
 		frame.getContentPane().add(lblImportTotal);
 		
-		
 		textImport.setBounds(732, 403, 97, 20);
 		frame.getContentPane().add(textImport);
 		textImport.setEditable(false);
+		/*
 		try {
 			textImport.setText(""+GestioComandes.calcularPreu(idComanda));
 		} catch (Exception e) {
@@ -230,5 +250,6 @@ public class ComandaWindow {
 			e.printStackTrace();
 			textImport.setText(""+0);
 		}
+		*/
 	}
 }
