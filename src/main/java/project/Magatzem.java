@@ -33,7 +33,7 @@ public class Magatzem implements Serializable{
 	Magatzem(){
 	}
 	
-	Magatzem(List<Producte> lp, List<Client> lc, List<Comanda> lm, List<Proveidor> lpv){
+	public Magatzem(List<Producte> lp, List<Client> lc, List<Comanda> lm, List<Proveidor> lpv){
 		magatzem = lp;
 		clients = lc;
 		comandes = lm;
