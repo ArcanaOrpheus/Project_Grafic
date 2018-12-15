@@ -1,4 +1,4 @@
-package Windows;
+package windows;
 
 import java.awt.EventQueue;
 
@@ -13,9 +13,11 @@ import javax.swing.JTextPane;
 import javax.swing.Box;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import project.Producte;
+import project.Programa;
 import project.Proveidor;
 
 import javax.swing.JRadioButton;
@@ -31,10 +33,12 @@ import javax.swing.Action;
 import java.awt.event.ActionListener;
 import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProducteWindow{
 
+	public List<Producte> lp;
 	private JFrame frame;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
@@ -88,7 +92,7 @@ public class ProducteWindow{
 		
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 736, 534);
+		frame.setBounds(100, 100, 1029, 532);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -215,41 +219,29 @@ public class ProducteWindow{
 		
 		
 		Composicio = new JTable();
-		Composicio.setBounds(436, 71, 252, 111);
+		Composicio.setBounds(436, 71, 511, 154);
 		frame.getContentPane().add(Composicio);
-		Composicio.setModel(new TableModel() {
-			public void addTableModelListener(TableModelListener arg0) {
-				Composicio.setAutoCreateColumnsFromModel(true);
-				Composicio.setShowGrid(true);
-			}
-			public Class<?> getColumnClass(int arg0) {
-				return null;
-			}
-			public int getColumnCount() {
-				List<Producte> lp = Program.mgz.getProductes();
-				return lp.size();
-			}
-			public String getColumnName(int arg0) {
-				String[] columname = {"Prod_ID", "Surname", "Country"
-						, "Event", "Place", "Time", "World Record" };
-				return columname[arg0];
-			}
-			public int getRowCount() {
-				return 0;
-			}
-			public Object getValueAt(int arg0, int arg1) {
-				return null;
-			}
-			public boolean isCellEditable(int arg0, int arg1) {
-				return false;
-			}
-			public void removeTableModelListener(TableModelListener arg0) {
-			}
-			public void setValueAt(Object arg0, int arg1, int arg2) {
-			}
-		});
-		
-		
+		String[] col = {"Prod_ID", "nom", "stock", "stock_min", "Unitat", "Tipus", "Proveidor", "Preu", "pes" };
+		DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+		Object[] data = {3,"sucre",1,1,"Gram","Ingredient","Tilo",1.2,1.0};
+		tableModel.addRow(data);
+		/*ArrayList<Producte> ap = (ArrayList<Producte>) Program.mgz.getProductes();
+		for (int i = 0; i < ap.size(); i++){
+			int id = ap.get(i).getCodiProducte();
+			String name = ap.get(i).getNomProducte();
+			int stack = ap.get(i).getStock();
+			int stack_min = ap.get(i).getStockMinim();
+			project.UnitatMesura u = ap.get(i).getUnitatMesura();
+			project.Tipus t = ap.get(i).getTipus();
+			String prov = ap.get(i).getProveidor().getNomProveidor();
+			double price = ap.get(i).getPreuVenda();
+			double pes = ap.get(i).getPes();
+			Object[] data = {id,name,stack,stack_min,u,t,prov,price,pes};
+			tableModel.addRow(data);
+		}*/
+		tableModel.setColumnIdentifiers(col);
+		Composicio.setModel(tableModel);
+		Composicio.setVisible(true);
 		table_1 = new JTable();
 		table_1.setBounds(436, 261, 242, 111);
 		frame.getContentPane().add(table_1);

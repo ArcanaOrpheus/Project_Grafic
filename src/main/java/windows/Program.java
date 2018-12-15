@@ -1,4 +1,4 @@
-package Windows;
+package windows;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -10,12 +10,15 @@ public class Program {
 	public static void main(String[] args) {
 		create();
 	}
-	static Magatzem mgz ;
+	public static Magatzem mgz ;
 	public static void create() {
 	mgz = new Magatzem(new ArrayList<Producte>(), new ArrayList<Client>(), new ArrayList<Comanda>(), new ArrayList<Proveidor>());
 	Programa.generarDadesBasiques(mgz);
 	System.out.println("Veure Magatzem:");
 	System.out.println(mgz);
+	pw.lp = mgz.getProductes();
+	System.out.println(pw.lp);
+	System.out.println(pw.lp.size());
 	pw.main(null);
 	}
 	

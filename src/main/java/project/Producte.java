@@ -186,6 +186,10 @@ public class Producte implements Comparable<Producte>, Serializable {
 		return(stock + this.calcularStockLote());
 	}
 	
+	public double getPes() {
+		return pes;
+	}
+	
 	public String veureLotsOrdenats() {
 		lots.sort(null);
 		String cadena = "";
@@ -199,7 +203,7 @@ public class Producte implements Comparable<Producte>, Serializable {
 		mg.add(p);
 		return true;
 	}
-
+	
 	public boolean Delete(Magatzem mg, Producte p) {
 		List <Producte> lp = mg.getProductes();
 		int i=(Integer) null;
