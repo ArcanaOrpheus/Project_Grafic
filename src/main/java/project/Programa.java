@@ -35,7 +35,7 @@ public class Programa implements Serializable{
 		Producte.check(elMeuMagatzem.getProductes().get(0));
 	}
 
-	private static void generarDadesBasiques(Magatzem mgz) {
+	public static void generarDadesBasiques(Magatzem mgz) {
 		
 		//Prove�dors
 		Proveidor pv1 = new Proveidor("UNOproveidor");

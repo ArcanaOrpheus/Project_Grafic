@@ -91,7 +91,7 @@ public class Producte implements Comparable<Producte>, Serializable {
 		stock = 0;
 	}
 
-	Producte(String nomProducte){
+	public Producte(String nomProducte){
 		this();
 		this.nomProducte = nomProducte;
 	}

@@ -1,4 +1,4 @@
-package windows;
+package Windows;
 
 import java.awt.EventQueue;
 
@@ -12,6 +12,8 @@ import java.awt.TextField;
 import javax.swing.JTextPane;
 import javax.swing.Box;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
 
 import project.Producte;
 import project.Proveidor;
@@ -29,19 +31,31 @@ import javax.swing.Action;
 import java.awt.event.ActionListener;
 import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
+import java.util.List;
 
 public class ProducteWindow{
 
 	private JFrame frame;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
-	private JTable table;
+	private JTable Composicio;
 	private JTable table_1;
 	private final Action action = new SwingAction();
 	private String name2;
 	public static JTextArea Textname2 = new JTextArea();
 	public static JTextArea ProducteID = new JTextArea();
-
+	public static JTextArea Preu = new JTextArea();
+	public static JTextArea stack = new JTextArea();
+	public static JTextArea stackmin = new JTextArea();
+	public static JTextArea desc= new JTextArea();
+	private int IDProd=0;
+	private String descripcio = "";
+	private int stock =0;
+	private int stockmin =0;
+	private String unitat = "";
+	private String tipus = "";
+	private Proveidor proveidor = null;
+	private double preuVenda= 0;
 	/**
 	 * Launch the application.
 	 */
@@ -68,16 +82,8 @@ public class ProducteWindow{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	static int IDProd=0;
-	
-	static String descripcio = "";
-	static int stock =0;
-	static int stockmin =0;
-	static String unitat = "";
-	static String tipus = "";
-	static Proveidor proveidor = null;
-	static double preuVenda= 0;
-	private void initialize() {
+
+	protected void initialize() {
 		
 		
 		
@@ -114,13 +120,10 @@ public class ProducteWindow{
 		Textname2.setBounds(82, 71, 302, 20);
 		frame.getContentPane().add(Textname2);
 		
-		
-		
 		JLabel lblDescripcio = new JLabel("descripcio:");
 		lblDescripcio.setBounds(10, 96, 62, 14);
 		frame.getContentPane().add(lblDescripcio);
 				
-		JTextPane desc = new JTextPane();
 		desc.setBounds(82, 96, 302, 123);
 		frame.getContentPane().add(desc);
 		
@@ -129,15 +132,13 @@ public class ProducteWindow{
 		lblNewLabel_1.setBounds(10, 236, 62, 14);
 		frame.getContentPane().add(lblNewLabel_1);
 		
-		JTextPane preuV = new JTextPane();
-		preuV.setBounds(82, 230, 118, 20);
-		frame.getContentPane().add(preuV);
+		Preu.setBounds(82, 230, 118, 20);
+		frame.getContentPane().add(Preu);
 		
 		JLabel lblStock = new JLabel("stock");
 		lblStock.setBounds(10, 261, 46, 14);
 		frame.getContentPane().add(lblStock);
 		
-		JTextPane stack = new JTextPane();
 		stack.setBounds(82, 261, 118, 20);
 		frame.getContentPane().add(stack);
 		
@@ -145,9 +146,8 @@ public class ProducteWindow{
 		lblStockminim.setBounds(210, 261, 62, 14);
 		frame.getContentPane().add(lblStockminim);
 		
-		JTextPane minstack = new JTextPane();
-		minstack.setBounds(266, 255, 118, 20);
-		frame.getContentPane().add(minstack);
+		stackmin.setBounds(266, 255, 118, 20);
+		frame.getContentPane().add(stackmin);
 		
 		Box Type = Box.createVerticalBox();
 		Type.setBorder(new TitledBorder(null, "Tipus de producte", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -161,7 +161,7 @@ public class ProducteWindow{
 		JRadioButton rdbtnIngredient = new JRadioButton("Ingredient");
 		buttonGroup_1.add(rdbtnIngredient);
 		Type.add(rdbtnIngredient);
-		
+				
 		Box Unity = Box.createVerticalBox();
 		Unity.setBorder(new TitledBorder(null, "Unitat de mesura", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		Unity.setBounds(138, 341, 118, 109);
@@ -184,24 +184,71 @@ public class ProducteWindow{
 			public void actionPerformed(ActionEvent arg0) {
 				name2 = Textname2.getText();
 				IDProd = Integer.parseInt(ProducteID.getText());
+				preuVenda =(double) (Integer.parseInt(Preu.getText()));
+				stockmin=Integer.parseInt(stackmin.getText());
 				Producte p = new Producte (name2);
-				p.set
+				p.setPreuVenda(preuVenda);
+				p.setStockMinim(stockmin);
 				Program.addProducte(p);
 			}
 		});
 		btnAfegir.setBounds(10, 461, 89, 23);
 		frame.getContentPane().add(btnAfegir);
+		
 		JButton btnModificar = new JButton("Modificar");
 		btnModificar.setBounds(109, 461, 89, 23);
 		frame.getContentPane().add(btnModificar);
-		
+				
 		JButton btnEsborrar = new JButton("Esborrar");
 		btnEsborrar.setBounds(210, 461, 89, 23);
 		frame.getContentPane().add(btnEsborrar);
+		btnEsborrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				name2 = Textname2.getText();
+				try {
+					Program.delProducte(name2);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		
-		table = new JTable();
-		table.setBounds(436, 71, 252, 111);
-		frame.getContentPane().add(table);
+		
+		Composicio = new JTable();
+		Composicio.setBounds(436, 71, 252, 111);
+		frame.getContentPane().add(Composicio);
+		Composicio.setModel(new TableModel() {
+			public void addTableModelListener(TableModelListener arg0) {
+				Composicio.setAutoCreateColumnsFromModel(true);
+				Composicio.setShowGrid(true);
+			}
+			public Class<?> getColumnClass(int arg0) {
+				return null;
+			}
+			public int getColumnCount() {
+				List<Producte> lp = Program.mgz.getProductes();
+				return lp.size();
+			}
+			public String getColumnName(int arg0) {
+				String[] columname = {"Prod_ID", "Surname", "Country"
+						, "Event", "Place", "Time", "World Record" };
+				return columname[arg0];
+			}
+			public int getRowCount() {
+				return 0;
+			}
+			public Object getValueAt(int arg0, int arg1) {
+				return null;
+			}
+			public boolean isCellEditable(int arg0, int arg1) {
+				return false;
+			}
+			public void removeTableModelListener(TableModelListener arg0) {
+			}
+			public void setValueAt(Object arg0, int arg1, int arg2) {
+			}
+		});
+		
 		
 		table_1 = new JTable();
 		table_1.setBounds(436, 261, 242, 111);
