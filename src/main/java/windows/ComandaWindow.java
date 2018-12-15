@@ -14,13 +14,16 @@ import javax.swing.border.LineBorder;
 import javax.swing.JComboBox;
 import javax.swing.Box;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 import ficheros.GestioComandes;
 import project.Client;
 import project.Comanda;
+import project.ComandaLinia;
 import project.Programa;
 
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
@@ -189,10 +192,27 @@ public class ComandaWindow {
 		buttonGroup.add(rdbtnLliurada);
 		verticalBox.add(rdbtnLliurada);
 		
-		int col = c.getLinies().size();
-		table = new JTable();
-		table.setBounds(20, 216, 809, 182);
-		frame.getContentPane().add(table);
+		/*TABLA*/
+		String col[] = {"Producte","Quantitat","Preu Venda"};
+		DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+		try {
+			for(ComandaLinia cll : Programa.elMeuMagatzem.getComandes().get(idComanda-2).getLinies())
+			{
+				String nomProd = cll.getProducte().getNomProducte();
+				int quant = cll.getQuantitat();
+				double preu = cll.getPreuVenda();
+				
+				Object[] data = {nomProd, quant, preu};
+				tableModel.addRow(data);
+			}
+		} catch (Exception e1) {
+		}
+		table = new JTable(tableModel);
+		JScrollPane jscroll = new JScrollPane(table);
+		jscroll.setBounds(20, 216, 809, 182);
+		frame.getContentPane().add(jscroll);
+		
+		
 		
 		JButton btnNovaComanda = new JButton("Nova Comanda");
 		btnNovaComanda.addActionListener(new ActionListener() {
@@ -209,6 +229,9 @@ public class ComandaWindow {
 				
 				Programa.elMeuMagatzem.getComandes().add(c);
 				System.out.println("Comanda Afegida");
+				
+				idComanda++;
+				textComanda.setText(""+idComanda);
 				
 			}
 		});
