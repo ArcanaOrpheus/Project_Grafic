@@ -165,7 +165,7 @@ public class Programa implements Serializable{
 		m1.getLinies().add(new ComandaLinia (pliv,20,20));
 		m1.getLinies().add(new ComandaLinia(pllim,1,0));
 		mgz.getComandes().add(m1);
-		
+	
 	}
 	
 	

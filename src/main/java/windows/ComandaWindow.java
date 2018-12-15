@@ -44,7 +44,7 @@ public class ComandaWindow {
 	static JTextPane textDataLl = new JTextPane();
 	static JTextPane textPorts = new JTextPane();
 	static JTextPane textImport = new JTextPane();
-	private int idComanda = Programa.elMeuMagatzem.getComandes().size()+1;
+	private int idComanda = 0;
 	private LocalDate today = LocalDate.now(ZoneId.of("Europe/Madrid"));
 	private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	private LocalDate nextweek = today.plusDays(7);
@@ -80,6 +80,7 @@ public class ComandaWindow {
 	 */
 	private void initialize() {
 		Programa.main(null);
+		idComanda = Programa.elMeuMagatzem.getComandes().size()+2;
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 855, 523);
@@ -165,6 +166,7 @@ public class ComandaWindow {
 		
 		textPorts.setBounds(602, 85, 73, 20);
 		panel_1.add(textPorts);
+		textPorts.setText("0");
 		
 		Box verticalBox = Box.createVerticalBox();
 		verticalBox.setBorder(new TitledBorder(null, "Estat Comanda", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -205,6 +207,9 @@ public class ComandaWindow {
 				c.setPortes(Double.parseDouble(textPorts.getText()));
 				c.setClient(person);
 				
+				Programa.elMeuMagatzem.getComandes().add(c);
+				System.out.println("Comanda Afegida");
+				
 			}
 		});
 		
@@ -242,14 +247,23 @@ public class ComandaWindow {
 		textImport.setBounds(732, 403, 97, 20);
 		frame.getContentPane().add(textImport);
 		textImport.setEditable(false);
-		/*
+
+		
 		try {
 			textImport.setText(""+GestioComandes.calcularPreu(idComanda));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			textImport.setText(""+0);
+			textImport.setText("0");
 		}
-		*/
+	
+		
+		JButton btnNewButton_2 = new JButton("Editar Linea");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_2.setBounds(10, 403, 105, 23);
+		frame.getContentPane().add(btnNewButton_2);
+		
 	}
 }
