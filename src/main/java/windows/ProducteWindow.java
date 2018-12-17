@@ -16,11 +16,16 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import project.ComandaEstat;
+import project.ComandaLinia;
 import project.Producte;
 import project.Programa;
 import project.Proveidor;
+import project.Tipus;
+import project.UnitatMesura;
 
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JTable;
@@ -42,8 +47,7 @@ public class ProducteWindow{
 	private JFrame frame;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
-	private JTable Composicio;
-	private JTable table_1;
+	private JTable composicio;
 	private final Action action = new SwingAction();
 	private String name2;
 	public static JTextArea Textname2 = new JTextArea();
@@ -52,14 +56,18 @@ public class ProducteWindow{
 	public static JTextArea stack = new JTextArea();
 	public static JTextArea stackmin = new JTextArea();
 	public static JTextArea desc= new JTextArea();
-	private int IDProd=0;
+	private int IDProd = 0;
 	private String descripcio = "";
-	private int stock =0;
-	private int stockmin =0;
+	private int stock = 0;
+	private int stockmin = 0;
 	private String unitat = "";
 	private String tipus = "";
 	private Proveidor proveidor = null;
-	private double preuVenda= 0;
+	private double preuVenda = 0;
+	private Object[] data = {"","","","","","","","",""};
+	private Tipus tipo = null;
+	private UnitatMesura mesura = null;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -89,7 +97,7 @@ public class ProducteWindow{
 
 	protected void initialize() {
 		
-		
+		Programa.main(null);
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1029, 532);
@@ -98,7 +106,7 @@ public class ProducteWindow{
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(135, 206, 235));
-		panel.setBounds(0, 0, 720, 35);
+		panel.setBounds(0, 0, 1013, 35);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -106,7 +114,7 @@ public class ProducteWindow{
 		lblNewLabel.setForeground(new Color(139, 0, 0));
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 16));
 		lblNewLabel.setBackground(new Color(128, 0, 0));
-		lblNewLabel.setBounds(0, 11, 72, 14);
+		lblNewLabel.setBounds(10, 11, 72, 14);
 		panel.add(lblNewLabel);
 		
 		JLabel lblIdproducte = new JLabel("idProducte:");
@@ -160,10 +168,20 @@ public class ProducteWindow{
 		
 		JRadioButton rdbtnVendible = new JRadioButton("Vendible");
 		buttonGroup_1.add(rdbtnVendible);
+		rdbtnVendible.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tipo = Tipus.VENDIBLE;
+			}
+		});
 		Type.add(rdbtnVendible);
 		
 		JRadioButton rdbtnIngredient = new JRadioButton("Ingredient");
 		buttonGroup_1.add(rdbtnIngredient);
+		rdbtnIngredient.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tipo = Tipus.INGREDIENT;
+			}
+		});
 		Type.add(rdbtnIngredient);
 				
 		Box Unity = Box.createVerticalBox();
@@ -173,14 +191,29 @@ public class ProducteWindow{
 		
 		JRadioButton rdbtnLitre = new JRadioButton("Litre");
 		buttonGroup.add(rdbtnLitre);
+		rdbtnLitre.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mesura = UnitatMesura.LLITRE;
+			}
+		});
 		Unity.add(rdbtnLitre);
 		
 		JRadioButton rdbtnGram = new JRadioButton("Gram");
 		buttonGroup.add(rdbtnGram);
+		rdbtnGram.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mesura = UnitatMesura.GRAMS;
+			}
+		});
 		Unity.add(rdbtnGram);
 		
 		JRadioButton rdbtnUnitat = new JRadioButton("Unitat");
 		buttonGroup.add(rdbtnUnitat);
+		rdbtnUnitat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mesura = UnitatMesura.UNITAT;
+			}
+		});
 		Unity.add(rdbtnUnitat);
 		
 		JButton btnAfegir = new JButton("Afegir");
@@ -188,8 +221,8 @@ public class ProducteWindow{
 			public void actionPerformed(ActionEvent arg0) {
 				name2 = Textname2.getText();
 				IDProd = Integer.parseInt(ProducteID.getText());
-				preuVenda =(double) (Integer.parseInt(Preu.getText()));
-				stockmin=Integer.parseInt(stackmin.getText());
+				preuVenda = Double.parseDouble((Preu.getText()));
+				stockmin = Integer.parseInt(stackmin.getText());
 				Producte p = new Producte (name2);
 				p.setPreuVenda(preuVenda);
 				p.setStockMinim(stockmin);
@@ -218,33 +251,33 @@ public class ProducteWindow{
 		});
 		
 		
-		Composicio = new JTable();
-		Composicio.setBounds(436, 71, 511, 154);
-		frame.getContentPane().add(Composicio);
-		String[] col = {"Prod_ID", "nom", "stock", "stock_min", "Unitat", "Tipus", "Proveidor", "Preu", "pes" };
+		
+		
+		String[] col = {"ID", "Nom", "Stock", "Stock Min", "Unitat", "Tipus", "Proveidor", "Preu", "Pes" };
 		DefaultTableModel tableModel = new DefaultTableModel(col, 0);
-		Object[] data = {3,"sucre",1,1,"Gram","Ingredient","Tilo",1.2,1.0};
-		tableModel.addRow(data);
-		/*ArrayList<Producte> ap = (ArrayList<Producte>) Program.mgz.getProductes();
-		for (int i = 0; i < ap.size(); i++){
-			int id = ap.get(i).getCodiProducte();
-			String name = ap.get(i).getNomProducte();
-			int stack = ap.get(i).getStock();
-			int stack_min = ap.get(i).getStockMinim();
-			project.UnitatMesura u = ap.get(i).getUnitatMesura();
-			project.Tipus t = ap.get(i).getTipus();
-			String prov = ap.get(i).getProveidor().getNomProveidor();
-			double price = ap.get(i).getPreuVenda();
-			double pes = ap.get(i).getPes();
-			Object[] data = {id,name,stack,stack_min,u,t,prov,price,pes};
-			tableModel.addRow(data);
-		}*/
-		tableModel.setColumnIdentifiers(col);
-		Composicio.setModel(tableModel);
-		Composicio.setVisible(true);
-		table_1 = new JTable();
-		table_1.setBounds(436, 261, 242, 111);
-		frame.getContentPane().add(table_1);
+		try {
+			for(Producte p : Programa.elMeuMagatzem.getProductes())
+			{
+				data[0] = p.getCodiProducte();
+				data[1] = p.getNomProducte();
+				data[2] = p.getStock();
+				data[3] = p.getStockMinim();
+				data[4] = p.getUnitatMesura();
+				data[5] = p.getTipus();
+				data[6] = p.getProveidor().getNomProveidor();
+				data[7] = p.getPreuVenda();
+				data[8] = p.getPes();
+				
+				tableModel.addRow(data);
+			}
+		} catch (Exception e1) {
+		}
+		composicio = new JTable(tableModel);
+		JScrollPane jscroll = new JScrollPane(composicio);
+		jscroll.setBounds(436, 71, 511, 154);
+		frame.getContentPane().add(jscroll);
+		
+		
 		
 		JLabel lblComposicio = new JLabel("Composicio");
 		lblComposicio.setBounds(434, 57, 67, 14);
