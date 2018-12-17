@@ -179,7 +179,12 @@ public class Magatzem implements Serializable{
 	public void setClients(List<Client> lc) {
 		clients = lc;
 	}
-		
+	
+	public boolean deleteComanda(Comanda c)
+	{
+		getComandes().remove(c);
+		return true;
+	}
 	
 	
 	@Override

@@ -66,6 +66,12 @@ public class Comanda implements Serializable{
 		return linies;
 	}
 	
+	
+	
+	public Double getPortes() {
+		return portes;
+	}
+
 	Comparator<Comanda> cmp_id2 = new Comparator<Comanda>()
 	{
 		@Override

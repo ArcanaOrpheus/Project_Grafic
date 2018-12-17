@@ -23,7 +23,6 @@ public class GestioComandes {
 	public static Comanda comandaPerId(int id) throws Exception
 	{
 		
-		System.out.println(id);
 		for(Comanda c : Programa.elMeuMagatzem.getComandes())
 		{
 			if(c.getIdComanda() == id)

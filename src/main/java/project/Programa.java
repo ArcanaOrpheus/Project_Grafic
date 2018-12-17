@@ -152,12 +152,12 @@ public class Programa implements Serializable{
 		m1.getLinies().add(new ComandaLinia(pllim,40,12));
 		mgz.getComandes().add(m1);
 
-		m1 = new Comanda(c1);
+		m1 = new Comanda(c2);
 		m1.getLinies().add(new ComandaLinia (pllim,20,15));
 		m1.getLinies().add(new ComandaLinia(pllim,4,0));
 		mgz.getComandes().add(m1);
 		
-		m1 = new Comanda(c1);
+		m1 = new Comanda(c4);
 		m1.getLinies().add(new ComandaLinia (pliv,50,18));
 		mgz.getComandes().add(m1);
 

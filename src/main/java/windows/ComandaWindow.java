@@ -14,11 +14,14 @@ import javax.swing.border.LineBorder;
 import javax.swing.JComboBox;
 import javax.swing.Box;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 import ficheros.GestioComandes;
 import project.Client;
 import project.Comanda;
+import project.ComandaEstat;
 import project.ComandaLinia;
 import project.Programa;
 
@@ -53,6 +56,9 @@ public class ComandaWindow {
 	private LocalDate nextweek = today.plusDays(7);
 	private Client person = new Client();
 	private Comanda c = new Comanda();
+	private Comanda y = null;
+	private Object[] data = {"","",""};
+	private ComandaEstat ce = null;
 	
 
 	/**
@@ -83,7 +89,7 @@ public class ComandaWindow {
 	 */
 	private void initialize() {
 		Programa.main(null);
-		idComanda = Programa.elMeuMagatzem.getComandes().size()+2;
+		idComanda = Programa.elMeuMagatzem.getComandes().size()+1;
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 855, 523);
@@ -108,8 +114,9 @@ public class ComandaWindow {
 		
 		textComanda.setBounds(93, 45, 57, 25);
 		frame.getContentPane().add(textComanda);
-		textComanda.setEditable(false);
 		textComanda.setText(""+idComanda);
+		
+		
 		
 		
 		JPanel panel_1 = new JPanel();
@@ -140,11 +147,12 @@ public class ComandaWindow {
                     
                     setText(person.getNomClient());
                     textIdClient.setText(person.getIdClient()-1+"");
-                }
-                
-                return this;
+                }   
+               return this;
             }
         } );
+		
+
 		
 		JLabel lblDatacomanda = new JLabel("dataComanda");
 		lblDatacomanda.setBounds(18, 50, 73, 14);
@@ -152,7 +160,6 @@ public class ComandaWindow {
 		
 		textDataC.setBounds(97, 47, 234, 20);
 		panel_1.add(textDataC);
-		textDataC.setText(today.format(dtf));
 		textDataC.setEditable(false);
 		
 		JLabel lblDatalliurament = new JLabel("dataLliurament");
@@ -161,7 +168,7 @@ public class ComandaWindow {
 		
 		textDataLl.setBounds(426, 47, 241, 20);
 		panel_1.add(textDataLl);
-		textDataLl.setText(nextweek.format(dtf));
+		
 		
 		JLabel lblPorts = new JLabel("Portes:");
 		lblPorts.setBounds(546, 91, 46, 14);
@@ -169,7 +176,7 @@ public class ComandaWindow {
 		
 		textPorts.setBounds(602, 85, 73, 20);
 		panel_1.add(textPorts);
-		textPorts.setText("0");
+		
 		
 		Box verticalBox = Box.createVerticalBox();
 		verticalBox.setBorder(new TitledBorder(null, "Estat Comanda", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -178,31 +185,53 @@ public class ComandaWindow {
 		
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("Pendent");
 		buttonGroup.add(rdbtnNewRadioButton);
+		rdbtnNewRadioButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ce = ComandaEstat.PENDENT;
+			}
+		});
 		verticalBox.add(rdbtnNewRadioButton);
 		
 		JRadioButton rdbtnPreparada = new JRadioButton("Preparada");
 		buttonGroup.add(rdbtnPreparada);
+		rdbtnPreparada.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ce = ComandaEstat.PREPARADA;
+			}
+		});
 		verticalBox.add(rdbtnPreparada);
 		
 		JRadioButton rdbtnTransport = new JRadioButton("Transport");
 		buttonGroup.add(rdbtnTransport);
+		rdbtnTransport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ce = ComandaEstat.TRANSPORT;
+			}
+		});
 		verticalBox.add(rdbtnTransport);
 		
 		JRadioButton rdbtnLliurada = new JRadioButton("Lliurada");
 		buttonGroup.add(rdbtnLliurada);
+		rdbtnLliurada.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ce = ComandaEstat.LLIURADA;
+			}
+		});
 		verticalBox.add(rdbtnLliurada);
 		
 		/*TABLA*/
 		String col[] = {"Producte","Quantitat","Preu Venda"};
 		DefaultTableModel tableModel = new DefaultTableModel(col, 0);
 		try {
-			for(ComandaLinia cll : Programa.elMeuMagatzem.getComandes().get(idComanda-2).getLinies())
+			for(ComandaLinia cll : Programa.elMeuMagatzem.getComandes().get(idComanda-1).getLinies())
 			{
 				String nomProd = cll.getProducte().getNomProducte();
 				int quant = cll.getQuantitat();
 				double preu = cll.getPreuVenda();
 				
-				Object[] data = {nomProd, quant, preu};
+				data[0] = nomProd;
+				data[1] = quant;
+				data[2] = preu;
 				tableModel.addRow(data);
 			}
 		} catch (Exception e1) {
@@ -214,54 +243,7 @@ public class ComandaWindow {
 		
 		
 		
-		JButton btnNovaComanda = new JButton("Nova Comanda");
-		btnNovaComanda.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				c.setIdComanda(idComanda);
-				Date date = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
-				c.setDataComanda(date);
-				LocalDate lc = LocalDate.parse(textDataLl.getText(), dtf);
-				Date date2 = Date.from(lc.atStartOfDay(ZoneId.systemDefault()).toInstant());
-				c.setDataLliurament(date2);
-				c.setPortes(Double.parseDouble(textPorts.getText()));
-				c.setClient(person);
-				
-				Programa.elMeuMagatzem.getComandes().add(c);
-				System.out.println("Comanda Afegida");
-				
-				idComanda++;
-				textComanda.setText(""+idComanda);
-				
-			}
-		});
 		
-		btnNovaComanda.setBounds(10, 434, 105, 23);
-		frame.getContentPane().add(btnNovaComanda);
-		
-		JButton btnNewButton = new JButton("Esborrar Comanda");
-		btnNewButton.setBounds(125, 434, 143, 23);
-		frame.getContentPane().add(btnNewButton);
-		
-		JButton btnEditarComanda = new JButton("Editar Comanda");
-		btnEditarComanda.setBounds(278, 434, 114, 23);
-		frame.getContentPane().add(btnEditarComanda);
-		
-		JButton button = new JButton("<");
-		button.setBounds(583, 434, 46, 23);
-		frame.getContentPane().add(button);
-		
-		JButton button_1 = new JButton(">");
-		button_1.setBounds(639, 434, 46, 23);
-		frame.getContentPane().add(button_1);
-		
-		JButton btnNewButton_1 = new JButton("<<");
-		btnNewButton_1.setBounds(705, 434, 57, 23);
-		frame.getContentPane().add(btnNewButton_1);
-		
-		JButton button_2 = new JButton(">>");
-		button_2.setBounds(772, 434, 57, 23);
-		frame.getContentPane().add(button_2);
 		
 		JLabel lblImportTotal = new JLabel("Import Total");
 		lblImportTotal.setBounds(629, 409, 76, 14);
@@ -272,13 +254,11 @@ public class ComandaWindow {
 		textImport.setEditable(false);
 
 		
-		try {
-			textImport.setText(""+GestioComandes.calcularPreu(idComanda));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			textImport.setText("0");
-		}
-	
+		
+		textImport.setText("0.0");
+		textDataLl.setText(nextweek.format(dtf));
+		textDataC.setText(today.format(dtf));
+		textPorts.setText("0.0");
 		
 		JButton btnNewButton_2 = new JButton("Editar Linea");
 		btnNewButton_2.addActionListener(new ActionListener() {
@@ -287,6 +267,151 @@ public class ComandaWindow {
 		});
 		btnNewButton_2.setBounds(10, 403, 105, 23);
 		frame.getContentPane().add(btnNewButton_2);
+	
+	
+	
+	textComanda.getDocument().addDocumentListener(new DocumentListener() {
+		 public void changedUpdate(DocumentEvent e) {
+			  
+			  }
+		 public void removeUpdate(DocumentEvent e) {
+			 
+			  }
+		 public void insertUpdate(DocumentEvent e) {
+			  try {
+					y = GestioComandes.comandaPerId(Integer.parseInt(textComanda.getText())+1);
+				} catch (NumberFormatException e1) {
+					e1.printStackTrace();
+					y = null;
+				} catch (Exception e1) {
+					y = null;
+				}
+			  if (y != null)
+				{
+				  Client person2 = y.getClient();
+				  comboBox.setSelectedIndex(person2.getIdClient()-2);
+				  textIdClient.setText(person2.getIdClient()-1+"");
+				  LocalDate lul = y.getDataLliurament().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+				  textDataLl.setText(lul.format(dtf));
+				  lul = y.getDataComanda().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+				  textDataC.setText(lul.format(dtf));
+				  textPorts.setText(y.getPortes()+"");
+				  ce = y.getEstat();
+				  switch(ce)
+				  {
+				  case PENDENT:
+					  rdbtnNewRadioButton.setSelected(true);
+					  break;
+				  case PREPARADA:
+					  rdbtnPreparada.setSelected(true);
+					  break;
+				  case TRANSPORT:
+					  rdbtnTransport.setSelected(true);
+					  break;
+				  case LLIURADA:
+					  rdbtnLliurada.setSelected(true);
+					  break;
+				  }
+				  
+				  int count = tableModel.getRowCount();
+				  for(int i = count -1; i >= 0; i--)
+				  {
+					  tableModel.removeRow(i);
+				  }
+				  
+				  for(ComandaLinia cll : y.getLinies())
+					{
+					  data[0] = cll.getProducte().getNomProducte();
+					  data[1] = cll.getQuantitat();
+					  data[2] = cll.getPreuVenda();
+					  tableModel.addRow(data);
+					}
+				  table = new JTable(tableModel);
+				  jscroll.add(table);
+				  try {
+					textImport.setText(""+GestioComandes.calcularPreu(y.getIdComanda()));
+				} catch (Exception e1) {
+					textImport.setText("0");
+				}
+				}else {
+					 int count = tableModel.getRowCount();
+					 
+					  for(int i = count -1; i >= 0; i--)
+					  {
+						  tableModel.removeRow(i);
+					  }
+					  table = new JTable(tableModel);
+					  textImport.setText("0.0");
+					  jscroll.add(table);
+					  textDataLl.setText(nextweek.format(dtf));
+					  textDataC.setText(today.format(dtf));
+					  textPorts.setText("0.0");
+					  ce = null;
+					  buttonGroup.clearSelection();
+				}
 		
+			  }
+		
+	});
+	
+	JButton btnNovaComanda = new JButton("Nova Comanda");
+	btnNovaComanda.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+			
+			c = new Comanda();
+			c.setIdComanda(idComanda+1);
+			Date date = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
+			c.setDataComanda(date);
+			LocalDate lc = LocalDate.parse(textDataLl.getText(), dtf);
+			Date date2 = Date.from(lc.atStartOfDay(ZoneId.systemDefault()).toInstant());
+			c.setDataLliurament(date2);
+			c.setPortes(Double.parseDouble(textPorts.getText()));
+			c.setClient(person);
+			c.setEstat(ce);
+			
+			Programa.elMeuMagatzem.getComandes().add(c);
+			System.out.println("Comanda Afegida");
+			
+			idComanda++;
+			textComanda.setText(""+idComanda);
+			
+			
+			
+			
+		}
+	});
+	
+	btnNovaComanda.setBounds(10, 434, 105, 23);
+	frame.getContentPane().add(btnNovaComanda);
+	
+	JButton btnNewButton = new JButton("Esborrar Comanda");
+	btnNewButton.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			if (y != null)
+			{
+				if(Programa.elMeuMagatzem.deleteComanda(y))
+				{
+					System.out.println("Comanda Borrada");
+				}
+				else
+				{
+					System.out.println("Comanda no existeix");
+				}
+			}
+		}
+	});
+	btnNewButton.setBounds(125, 434, 143, 23);
+	frame.getContentPane().add(btnNewButton);
+	
+	JButton btnEditarComanda = new JButton("Editar Comanda");
+	btnEditarComanda.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+	});
+	btnEditarComanda.setBounds(278, 434, 114, 23);
+	frame.getContentPane().add(btnEditarComanda);
+	
+	
 	}
 }
