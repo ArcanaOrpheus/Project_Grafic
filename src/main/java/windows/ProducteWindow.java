@@ -12,6 +12,8 @@ import java.awt.TextField;
 import javax.swing.JTextPane;
 import javax.swing.Box;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -40,6 +42,7 @@ import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class ProducteWindow{
 
@@ -48,7 +51,6 @@ public class ProducteWindow{
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	private JTable composicio;
-	private final Action action = new SwingAction();
 	private String name2;
 	public static JTextArea Textname2 = new JTextArea();
 	public static JTextArea ProducteID = new JTextArea();
@@ -67,6 +69,7 @@ public class ProducteWindow{
 	private Object[] data = {"","","","","","","","",""};
 	private Tipus tipo = null;
 	private UnitatMesura mesura = null;
+	private Producte y = null;
 	
 	/**
 	 * Launch the application.
@@ -98,6 +101,7 @@ public class ProducteWindow{
 	protected void initialize() {
 		
 		Programa.main(null);
+		IDProd = Programa.elMeuMagatzem.getProductes().size();
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1029, 532);
@@ -124,6 +128,7 @@ public class ProducteWindow{
 		
 		ProducteID.setBounds(82, 40, 118, 20);
 		frame.getContentPane().add(ProducteID);
+		ProducteID.setText(IDProd+"");
 		
 		JLabel lblNom = new JLabel("nom:");
 		lblNom.setBounds(10, 71, 46, 14);
@@ -256,8 +261,13 @@ public class ProducteWindow{
 		String[] col = {"ID", "Nom", "Stock", "Stock Min", "Unitat", "Tipus", "Proveidor", "Preu", "Pes" };
 		DefaultTableModel tableModel = new DefaultTableModel(col, 0);
 		try {
-			for(Producte p : Programa.elMeuMagatzem.getProductes())
+			Set<Producte> peta = Programa.elMeuMagatzem.getProductes().get(IDProd -1).getComposicio().keySet();
+			Object[] products = peta.toArray();
+			for(int i = 0; i < Programa.elMeuMagatzem.getProductes().get(IDProd-1).getComposicio().size(); i++)
 			{
+				
+				Producte p = (Producte) products[i];
+				
 				data[0] = p.getCodiProducte();
 				data[1] = p.getNomProducte();
 				data[2] = p.getStock();
@@ -294,22 +304,65 @@ public class ProducteWindow{
 		JLabel lblPreveedor = new JLabel("Proveedor");
 		lblPreveedor.setBounds(10, 295, 62, 14);
 		frame.getContentPane().add(lblPreveedor);
-	}
-	private class SwingAction extends AbstractAction {
-		public SwingAction() {
-			putValue(NAME, "SwingAction");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-		public void actionPerformed(ActionEvent e) {
-		}
-	}
-	public void componentAdded(ContainerEvent arg0) {
-		// TODO Auto-generated method stub
+		
+		ProducteID.getDocument().addDocumentListener(new DocumentListener() {
+			 public void changedUpdate(DocumentEvent e) {
+			
+				  }
+			 public void removeUpdate(DocumentEvent e) {
+
+				  }
+			 public void insertUpdate(DocumentEvent e) {
+				  try {
+					  y = Programa.elMeuMagatzem.getProductes().get(Integer.parseInt(ProducteID.getText())+1);
+				  }catch(Exception e3) {
+					  y = null;
+				  }
+				 if(y != null)
+				 {
+					 
+					 
+					 Textname2.setText(y.getNomProducte());
+				 int count = tableModel.getRowCount();
+				  for(int i = count -1; i >= 0; i--)
+				  {
+					  tableModel.removeRow(i);
+				  }
+				  Set<Producte> peta = y.getComposicio().keySet();
+					Object[] products = peta.toArray();
+					System.out.println(y.getComposicio().size());
+					for(int i = 0; i < y.getComposicio().size(); i++)
+					{
+						
+						Producte p = (Producte) products[i];
+						
+						data[0] = p.getCodiProducte();
+						data[1] = p.getNomProducte();
+						data[2] = p.getStock();
+						data[3] = p.getStockMinim();
+						data[4] = p.getUnitatMesura();
+						data[5] = p.getTipus();
+						data[6] = p.getProveidor().getNomProveidor();
+						data[7] = p.getPreuVenda();
+						data[8] = p.getPes();
+						
+						tableModel.addRow(data);
+						
+						composicio = new JTable(tableModel);
+						jscroll.add(composicio);
+					}
+				  
+				 
+				 }
+				 else
+				 {
+					 
+				 }
+			 }
+			 
+		});
+		
 		
 	}
 
-	public void componentRemoved(ContainerEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 }
