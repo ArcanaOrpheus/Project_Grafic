@@ -128,7 +128,7 @@ public class ProducteWindow{
 		
 		ProducteID.setBounds(82, 40, 118, 20);
 		frame.getContentPane().add(ProducteID);
-		ProducteID.setText(IDProd+"");
+		ProducteID.setText(IDProd+1+"");
 		
 		JLabel lblNom = new JLabel("nom:");
 		lblNom.setBounds(10, 71, 46, 14);
@@ -314,7 +314,7 @@ public class ProducteWindow{
 				  }
 			 public void insertUpdate(DocumentEvent e) {
 				  try {
-					  y = Programa.elMeuMagatzem.getProductes().get(Integer.parseInt(ProducteID.getText())+1);
+					  y = Programa.elMeuMagatzem.getProductes().get(Integer.parseInt(ProducteID.getText())-1);
 				  }catch(Exception e3) {
 					  y = null;
 				  }
@@ -323,6 +323,10 @@ public class ProducteWindow{
 					 
 					 
 					 Textname2.setText(y.getNomProducte());
+					 Preu.setText(y.getPreuVenda()+"");
+					 stack.setText(y.getStock()+"");
+					 stackmin.setText(y.getStockMinim()+"");
+					 
 				 int count = tableModel.getRowCount();
 				  for(int i = count -1; i >= 0; i--)
 				  {
@@ -356,7 +360,15 @@ public class ProducteWindow{
 				 }
 				 else
 				 {
-					 
+					 Textname2.setText("");
+					 Preu.setText("");
+					 stack.setText("");
+					 stackmin.setText("");
+					 int count = tableModel.getRowCount();
+					 for(int i = count -1; i >= 0; i--)
+					  {
+						  tableModel.removeRow(i);
+					  }
 				 }
 			 }
 			 

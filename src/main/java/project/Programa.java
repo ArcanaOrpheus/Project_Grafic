@@ -65,6 +65,7 @@ public class Programa implements Serializable{
 		p = new Producte("ous", UnitatMesura.UNITAT,240);
 		p.afegirLot(480, dataCaducitat);
 		mgz.add(p);
+		p.setProveidor(pv2);
 		
 		pliv.afegirComponent(p, 4);
 		
@@ -95,6 +96,7 @@ public class Programa implements Serializable{
 
 		pliv.afegirComponent(pSec, 1);
 		pllim.afegirComponent(pSec, 1);
+		pSec.setProveidor(pv2);
 
 		p = new Producte("nabius", UnitatMesura.GRAMS,4000);
 		dataCaducitat = Tools.sumarDies(new Date(), 15);
