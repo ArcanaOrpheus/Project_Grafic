@@ -34,6 +34,15 @@ public class GestioComandes {
 		throw new Exception("La comanda amb aquest id no existeix");
 	}
 	
+	public static void showComandes() {
+		
+		for(Comanda c : Programa.elMeuMagatzem.getComandes())
+		{
+		System.out.println(c.getIdComanda());
+		}
+		
+	}
+	
 	
 	public static double calcularPreu(int id) throws Exception {
 		

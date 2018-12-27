@@ -74,7 +74,7 @@ public class Factory {
 				prod.setStock(99);
 				prod.setStockMinim(1);
 				prod.setTipus(Tipus.INGREDIENT);
-				prod.setUnitatMesura(UnitatMesura.UNITAT);
+				prod.setUnitatMesura(UnitatMesura.UNITATS);
 				session.saveOrUpdate(prod);
 				ComandaLinia cmd = new ComandaLinia(prod, 1, 1);
 				session.saveOrUpdate(cmd);

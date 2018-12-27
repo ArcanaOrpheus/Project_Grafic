@@ -349,7 +349,8 @@ public class ComandaWindow {
 					  ce = null;
 					  buttonGroup.clearSelection();
 				}
-		
+			  
+			  idComanda = Integer.parseInt(textComanda.getText());
 			  }
 		
 	});
@@ -397,6 +398,8 @@ public class ComandaWindow {
 				{
 					System.out.println("Comanda no existeix");
 				}
+			}else {
+				System.out.println("Comanda no existeix");
 			}
 		}
 	});
@@ -406,6 +409,21 @@ public class ComandaWindow {
 	JButton btnEditarComanda = new JButton("Editar Comanda");
 	btnEditarComanda.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
+			//GestioComandes.showComandes();
+			try {
+				GestioComandes.comandaPerId(idComanda+1);
+				Date date = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
+				Programa.elMeuMagatzem.getComandes().get(idComanda-1).setDataComanda(date);
+				LocalDate lc = LocalDate.parse(textDataLl.getText(), dtf);
+				Date date2 = Date.from(lc.atStartOfDay(ZoneId.systemDefault()).toInstant());
+				Programa.elMeuMagatzem.getComandes().get(idComanda-1).setDataLliurament(date2);
+				Programa.elMeuMagatzem.getComandes().get(idComanda-1).setPortes(Double.parseDouble(textPorts.getText()));
+				Programa.elMeuMagatzem.getComandes().get(idComanda-1).setClient(person);
+				Programa.elMeuMagatzem.getComandes().get(idComanda-1).setEstat(ce);
+				System.out.println("Comanda modificada");
+			} catch (Exception e1) {
+				System.out.println(e1.getMessage());
+			}
 			
 		}
 	});

@@ -56,6 +56,32 @@ public class LotDesglossat implements Comparable<LotDesglossat>,Serializable {
 	}
 
 	
+	
+	
+	public int getLot() {
+		return lot;
+	}
+
+	public void setLot(int lot) {
+		this.lot = lot;
+	}
+
+	public Producte getCurso() {
+		return curso;
+	}
+
+	public void setCurso(Producte curso) {
+		this.curso = curso;
+	}
+
+	public void setDataEntrada(Date dataEntrada) {
+		this.dataEntrada = dataEntrada;
+	}
+
+	public void setDataCaducitat(Date dataCaducitat) {
+		this.dataCaducitat = dataCaducitat;
+	}
+
 	public Date getDataCaducitat() {
 		return dataCaducitat;
 	};

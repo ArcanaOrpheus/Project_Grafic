@@ -108,8 +108,11 @@ public class Magatzem implements Serializable{
 	}
 	
 	public boolean delete(Producte p) {
-		magatzem.remove(p);
+		
+		if(magatzem.remove(p)) {
 		return true;
+		}
+		return false;
 	}
 	
 	public void modify(Producte p) {
@@ -181,10 +184,14 @@ public class Magatzem implements Serializable{
 	}
 	
 	public boolean deleteComanda(Comanda c)
-	{
-		getComandes().remove(c);
-		return true;
+	{	
+		
+		if(getComandes().remove(c)) {
+			return true;
+		}
+		return false;
 	}
+	
 	
 	
 	@Override

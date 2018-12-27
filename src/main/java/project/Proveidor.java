@@ -44,7 +44,7 @@ public class Proveidor implements Serializable{
 	
 	@Column(name = "longitud")
 	protected double longitud;	
-	Proveidor(){
+	public Proveidor(){
 		idProveidor = Generador.getNextProveidor();
 	}
 	

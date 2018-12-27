@@ -39,7 +39,7 @@ public class Producte implements Comparable<Producte>, Serializable {
 	@Column(name = "composicio")
 	protected Map<Producte, Integer> composicio;	
 	
-	@OneToMany(mappedBy="curso", cascade= CascadeType.ALL)
+	@OneToMany(mappedBy="lot", cascade= CascadeType.ALL)
 	protected List <LotDesglossat> lots;
 	
 	@Column(name = "tipus")
@@ -59,6 +59,14 @@ public class Producte implements Comparable<Producte>, Serializable {
 		lots.add(new LotDesglossat(qLot,dataCaducitat,quantitat));
 	}
 	
+	
+	
+	public List<LotDesglossat> getLots() {
+		return lots;
+	}
+
+
+
 	public String veureLots() {
 		String cadena = "";
 		for(LotDesglossat ld: lots) {
@@ -103,6 +111,23 @@ public class Producte implements Comparable<Producte>, Serializable {
 	};
 	
 	
+
+	public void setComposicio(Map<Producte, Integer> composicio) {
+		this.composicio = composicio;
+	}
+
+	public void setLots(List<LotDesglossat> lots) {
+		this.lots = lots;
+	}
+
+	public void setPes(double pes) {
+		this.pes = pes;
+	}
+
+	public void setCodiProducte(int codiProducte) {
+		this.codiProducte = codiProducte;
+	}
+
 	public void setTipus(Tipus tipus) {
 		this.tipus = tipus;
 	}
@@ -128,7 +153,7 @@ public class Producte implements Comparable<Producte>, Serializable {
 		unitat = unitatm;
 	}
 
-	void setStock(int q) {
+	public void setStock(int q) {
 		stock = q;
 	}
 

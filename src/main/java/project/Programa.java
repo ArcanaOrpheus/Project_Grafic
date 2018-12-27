@@ -43,10 +43,12 @@ public class Programa implements Serializable{
 		//Prove�dors
 		Proveidor pv1 = new Proveidor("UNOproveidor");
 		Proveidor pv2 = new Proveidor ("DOSproveidor");
+		mgz.getProveidors().add(pv1);
+		mgz.getProveidors().add(pv2);
 		
 		// Productes, composici� i lots
-		Producte pliv = new Producte("pLiviano", UnitatMesura.UNITAT,4);
-		Producte pllim = new Producte("pLLimona", UnitatMesura.UNITAT,6);
+		Producte pliv = new Producte("pLiviano", UnitatMesura.UNITATS,4);
+		Producte pllim = new Producte("pLLimona", UnitatMesura.UNITATS,6);
 	    Date dataCaducitat;
 		Producte p = new Producte("sucre",UnitatMesura.GRAMS,100000);
 	    
@@ -56,13 +58,15 @@ public class Programa implements Serializable{
 		dataCaducitat = Tools.sumarDies(dataCaducitat,20);
 		p.afegirLot(70000, dataCaducitat);
 		
+		pliv.setProveidor(pv1);
+		pllim.setProveidor(pv2);
 		p.setProveidor(pv1);
 		mgz.add(p);
 		
 		pliv.afegirComponent(p, 115);
 		pllim.afegirComponent(p, 4);
 		
-		p = new Producte("ous", UnitatMesura.UNITAT,240);
+		p = new Producte("ous", UnitatMesura.UNITATS,240);
 		p.afegirLot(480, dataCaducitat);
 		mgz.add(p);
 		p.setProveidor(pv2);
@@ -91,7 +95,7 @@ public class Programa implements Serializable{
 		pliv.afegirComponent(p, 10);
 		pllim.afegirComponent(p, 8);
 
-		Producte pSec = new Producte("Secret", UnitatMesura.UNITAT,0);
+		Producte pSec = new Producte("Secret", UnitatMesura.UNITATS,0);
 		pSec.setStock(100);
 
 		pliv.afegirComponent(pSec, 1);
