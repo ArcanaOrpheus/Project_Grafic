@@ -103,7 +103,7 @@ public class ProducteWindow{
 
 	protected void initialize() {
 		
-		Programa.main(null);
+
 		IDProd = Programa.elMeuMagatzem.getProductes().size();
 		
 		frame = new JFrame();
@@ -357,8 +357,7 @@ public class ProducteWindow{
 						
 						tableModel.addRow(data);
 					}
-					composicio = new JTable(tableModel);
-					jscroll.add(composicio);
+					
 					for(LotDesglossat ld : y.getLots())
 					{
 						data1[0] = ld.getLot();
@@ -367,8 +366,7 @@ public class ProducteWindow{
 						data1[3] = ld.getDataCaducitat();
 						tableModel1.addRow(data1);
 					}
-					table = new JTable(tableModel1);
-					scrollPane.add(table);
+					
 					tipo = y.getTipus();
 					mesura = y.getUnitatMesura();
 					switch(tipo)
@@ -412,8 +410,6 @@ public class ProducteWindow{
 					  {
 						  tableModel1.removeRow(i);
 					  }
-					 table = new JTable(tableModel1);
-					 scrollPane.add(table);
 					 tipo = null;
 					 mesura = null;
 					 buttonGroup.clearSelection();
@@ -473,6 +469,15 @@ public class ProducteWindow{
 		JButton btnEsborrar = new JButton("Esborrar");
 		btnEsborrar.setBounds(227, 428, 89, 23);
 		frame.getContentPane().add(btnEsborrar);
+		
+		JButton button = new JButton("Sortir");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+		button.setBounds(893, 440, 89, 23);
+		frame.getContentPane().add(button);
 		btnEsborrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(y != null)

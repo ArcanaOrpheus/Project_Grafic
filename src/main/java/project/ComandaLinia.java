@@ -22,7 +22,7 @@ public class ComandaLinia implements Serializable{
 	@Column(name = "preuVenda",nullable = false)
 	protected double preuVenda;
 	
-	ComandaLinia(Producte p, int q, double preu) {
+	public ComandaLinia(Producte p, int q, double preu) {
 		producte = p;
 		quantitat = q;
 		preuVenda = preu;

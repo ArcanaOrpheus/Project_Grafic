@@ -90,7 +90,7 @@ public class Producte implements Comparable<Producte>, Serializable {
 		return cadena;
 	}
 
-	Producte() {
+	public Producte() {
 		codiProducte = Generador.getNextProducte();
 		lots = new ArrayList<LotDesglossat>();
 		composicio = new HashMap<Producte,Integer>();
