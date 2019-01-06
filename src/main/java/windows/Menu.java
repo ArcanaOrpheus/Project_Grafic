@@ -54,6 +54,7 @@ public class Menu extends JFrame {
 		JButton btnNewButton = new JButton("Consultes");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ConsultaWindow.main(null);
 			}
 		});
 		btnNewButton.setBounds(244, 92, 201, 34);
