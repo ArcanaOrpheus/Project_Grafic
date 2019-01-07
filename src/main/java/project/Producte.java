@@ -191,7 +191,7 @@ public class Producte implements Comparable<Producte>, Serializable {
 	}
 	
 	public int compareTo(Producte p) {
-		return (getNomProducte().compareTo(p.getNomProducte()));
+		return (getCodiProducte() - p.getCodiProducte());
 	}
 
 	public int getCodiProducte() {

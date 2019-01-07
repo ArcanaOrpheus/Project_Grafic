@@ -48,7 +48,7 @@ public class Proveidor implements Serializable{
 		idProveidor = Generador.getNextProveidor();
 	}
 	
-	Proveidor(String nom){
+	public Proveidor(String nom){
 		this();
 		nomProveidor = nom;
 	}

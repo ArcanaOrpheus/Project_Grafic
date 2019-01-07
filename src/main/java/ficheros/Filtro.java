@@ -49,7 +49,7 @@ public class Filtro {
 		return comandes;
 	}
 	
-	public ArrayList<Comanda> comandaDataLl(Date d, int i) {
+	public static ArrayList<Comanda> comandaDataLl(Date d, int i) {
 		
 		ArrayList<Comanda> comandes = new ArrayList<Comanda>();
 		
@@ -85,7 +85,7 @@ public class Filtro {
 		return comandes;
 	}
 	
-	public ArrayList<Comanda> comandaDataC(Date d, int i) {
+	public static ArrayList<Comanda> comandaDataC(Date d, int i) {
 		
 		ArrayList<Comanda> comandes = new ArrayList<Comanda>();
 		
@@ -121,12 +121,28 @@ public class Filtro {
 	}
 	
 	
-	
-	public ArrayList<Producte> productePerProveidor(Proveidor p)
+	public static ArrayList<Producte> productePerNom(Producte p, List<Producte> lista)
 	{
 		ArrayList<Producte> productes = new ArrayList<Producte>();
 		
-		List<Producte> allproductes = Programa.elMeuMagatzem.getProductes();
+		List<Producte> allproductes = lista;
+		
+		for (Producte pr : allproductes)
+		{
+			if(pr == p)
+			{
+				productes.add(pr);
+			}
+		}
+		return productes;
+	}
+	
+	
+	public static ArrayList<Producte> productePerProveidor(Proveidor p, List<Producte> lista)
+	{
+		ArrayList<Producte> productes = new ArrayList<Producte>();
+		
+		List<Producte> allproductes = lista;
 		
 		for (Producte pr : allproductes)
 		{
@@ -138,12 +154,12 @@ public class Filtro {
 		return productes;
 	}
 	
-	public ArrayList<Producte> productePerTipus(Tipus t)
+	public static ArrayList<Producte> productePerTipus(Tipus t, List<Producte> lista)
 	{
 		
 		ArrayList<Producte> productes = new ArrayList<Producte>();
 		
-		List<Producte> allproductes = Programa.elMeuMagatzem.getProductes();
+		List<Producte> allproductes = lista;
 		
 		for (Producte pr : allproductes)
 		{
@@ -156,11 +172,11 @@ public class Filtro {
 		return productes;
 	}
 	
-	public ArrayList<Producte> producteLessStock(){
+	public static ArrayList<Producte> producteLessStock(List<Producte> lista){
 		
 		ArrayList<Producte> productes = new ArrayList<Producte>();
 		
-		List<Producte> allproductes = Programa.elMeuMagatzem.getProductes();
+		List<Producte> allproductes = lista;
 		
 		for (Producte pr : allproductes)
 		{
@@ -172,7 +188,7 @@ public class Filtro {
 		return productes;
 	}
 	
-	public ArrayList<Producte> productePerPreu(int i){
+	public static ArrayList<Producte> productePerPreu(int i){
 		
 		ArrayList<Producte> productes = new ArrayList<Producte>();
 		
@@ -195,7 +211,8 @@ public class Filtro {
 		
 		return productes;
 	}
-	
+
+
 	
 	
 	/*

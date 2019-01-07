@@ -26,7 +26,7 @@ public class Programa implements Serializable{
 	
 		//3.- Veure magatzem ordenat per nom producte
 		elMeuMagatzem.getProductes().sort(null);
-		System.out.println("3.- Magatzem ordenat per nomProducte");
+		/*System.out.println("3.- Magatzem ordenat per nomProducte");
 		System.out.println(elMeuMagatzem);
 		
 		//4.- Veure magatzem ordenat per stock
@@ -36,6 +36,7 @@ public class Programa implements Serializable{
 		System.out.println(elMeuMagatzem);	
 		
 		Producte.check(elMeuMagatzem.getProductes().get(0));
+		*/
 	}
 
 	public static void generarDadesBasiques(Magatzem mgz) {
