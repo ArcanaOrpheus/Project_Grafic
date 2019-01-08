@@ -113,7 +113,7 @@ public class ConsultaWindow {
 		
 		List<Producte> combo = new ArrayList<>();
 		combo.addAll(Programa.elMeuMagatzem.getProductes()); 
-		combo.add(0, new Producte(""));
+		combo.add(0, new Producte("-"));
 		JComboBox comboBox = new JComboBox(new DefaultComboBoxModel(combo.toArray()));
 		comboBox.setBounds(265, 46, 263, 20);
 		panel.add(comboBox);
@@ -127,11 +127,11 @@ public class ConsultaWindow {
                     prod = (Producte) value;
                     
                     setText(prod.getNomProducte());
-                    if(!prod.getNomProducte().equals("")) {
+                    if(!prod.getNomProducte().equals("-")) {
                     textPane.setText(prod.getCodiProducte()+"");
                     }
                     else {
-                    	textPane.setText("");	
+                    	textPane.setText("-");	
                     }
                 }
                return this;
@@ -197,7 +197,7 @@ public class ConsultaWindow {
 		
 		
 		List<Proveidor> combo1 = Programa.elMeuMagatzem.getProveidors();
-		combo1.add(0, new Proveidor(""));
+		combo1.add(0, new Proveidor("-"));
 		JComboBox comboBox_1 = new JComboBox(new DefaultComboBoxModel(combo1.toArray()));
 		comboBox_1.setBounds(88, 89, 192, 20);
 		panel.add(comboBox_1);
