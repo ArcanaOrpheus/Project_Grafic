@@ -18,7 +18,7 @@
                         <index>true</index>
                         <manifest>
   <!-- Aqui va tu clase donde esta el main por si te da el Error: Couldn't find or load main class -->                      
-                            <mainClass>Profesor</mainClass>
+                            <mainClass>Menu</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

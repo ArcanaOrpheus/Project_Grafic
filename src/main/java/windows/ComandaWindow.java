@@ -176,7 +176,7 @@ public class ComandaWindow {
 		panel_1.add(textDataLl);
 		
 		
-		JLabel lblPorts = new JLabel("Portes:");
+		JLabel lblPorts = new JLabel("Ports:");
 		lblPorts.setBounds(546, 91, 46, 14);
 		panel_1.add(lblPorts);
 		
